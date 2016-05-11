@@ -1,0 +1,27 @@
+{
+  "name": "textpatcher",
+  "version": "1.0.0",
+  "description": "text patching, compatible with the chainpad api",
+  "main": "TextPatcher.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xwiki-labs/textpatcher.git"
+  },
+  "keywords": [
+    "text",
+    "string",
+    "diff",
+    "patch",
+    "chainpad",
+    "realtime"
+  ],
+  "author": "ansuz",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/xwiki-labs/textpatcher/issues"
+  },
+  "homepage": "https://github.com/xwiki-labs/textpatcher#readme"
+}
