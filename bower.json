@@ -1,0 +1,25 @@
+{
+  "name": "textpatcher",
+  "description": "text patching, compatible with the chainpad api",
+  "main": "TextPatcher.js",
+  "authors": [
+    "ansuz"
+  ],
+  "license": "AGPL-3.0",
+  "keywords": [
+    "text",
+    "string",
+    "diff",
+    "patch",
+    "chainpad",
+    "realtime"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
