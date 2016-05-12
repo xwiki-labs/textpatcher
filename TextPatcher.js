@@ -1,4 +1,4 @@
-define(function () {
+(function () {
 
 /*  diff takes two strings, the old content, and the desired content
     it returns the difference between these two strings in the form
@@ -133,7 +133,7 @@ var create = function(config) {
     };
 };
 
-return {
+var mod = module.exports = {
     create: create, // create a TextPatcher object
     diff: diff, // diff two strings
     patch: patch, // apply an operation to a chainpad's realtime facade
@@ -142,4 +142,7 @@ return {
     transformCursor: transformCursor, // transform the position of a cursor
     applyChange: applyChange, // a convenient wrapper around diff/log/patch
 };
-});
+
+return mod;
+
+}());
