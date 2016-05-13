@@ -1,4 +1,5 @@
-define(function () {
+define(function (module) {
+    module = module || {};
 
 /*  diff takes two strings, the old content, and the desired content
     it returns the difference between these two strings in the form
