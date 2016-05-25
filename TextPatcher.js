@@ -50,8 +50,15 @@ var diff = function (oldval, newval) {
 */
 var patch = function (ctx, op) {
     if (!op) { return; }
-    if (op.toRemove) { ctx.remove(op.offset, op.toRemove); }
-    if (op.toInsert) { ctx.insert(op.offset, op.toInsert); }
+
+    if (ctx.patch) {
+        ctx.patch(op.offset, op.toRemove, op.toInsert);
+    } else {
+        console.log("chainpad.remove and chainpad.insert are deprecated. "+
+            "update your chainpad installation to the latest version.");
+        if (op.toRemove) { ctx.remove(op.offset, op.toRemove); }
+        if (op.toInsert) { ctx.insert(op.offset, op.toInsert); }
+    }
 };
 
 /*  format has the same signature as log, but doesn't log to the console
