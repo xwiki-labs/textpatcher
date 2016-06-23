@@ -1,12 +1,14 @@
 (function () {
 
+    var TextPatcher = {};
+
 /*  diff takes two strings, the old content, and the desired content
     it returns the difference between these two strings in the form
     of an 'Operation' (as defined in chainpad.js).
 
     diff is purely functional.
 */
-var diff = function (oldval, newval) {
+var diff = TextPatcher.diff = function (oldval, newval) {
     // Strings are immutable and have reference equality. I think this test is O(1), so its worth doing.
     if (oldval === newval) {
         return;
@@ -48,7 +50,7 @@ var diff = function (oldval, newval) {
     patch has no return value, and operates solely through side effects on
     the realtime facade.
 */
-var patch = function (ctx, op) {
+var patch = TextPatcher.patch = function (ctx, op) {
     if (!op) { return; }
 
     if (ctx.patch) {
@@ -63,7 +65,7 @@ var patch = function (ctx, op) {
 
 /*  format has the same signature as log, but doesn't log to the console
     use it to get the pretty version of a diff */
-var format = function (text, op) {
+var format = TextPatcher.format = function (text, op) {
     return op?{
         insert: op.toInsert,
         remove: text.slice(op.offset, op.offset + op.toRemove)
@@ -76,7 +78,7 @@ var format = function (text, op) {
 
     log is useful for debugging, but can otherwise be disabled.
 */
-var log = function (text, op) {
+var log = TextPatcher.log = function (text, op) {
     if (!op) { return; }
     console.log(format(text, op));
 };
@@ -92,13 +94,13 @@ var log = function (text, op) {
     Due to its reliance on patch, applyChange has side effects on the supplied
     realtime facade.
 */
-var applyChange = function(ctx, oldval, newval, logging) {
+var applyChange = TextPatcher.applyChange = function(ctx, oldval, newval, logging) {
     var op = diff(oldval, newval);
     if (logging) { log(oldval, op); }
     patch(ctx, op);
 };
 
-var transformCursor = function (cursor, op) {
+var transformCursor = TextPatcher.transformCursor = function (cursor, op) {
     if (!op) { return cursor; }
     var pos = op.offset;
     var remove = op.toRemove;
@@ -113,7 +115,7 @@ var transformCursor = function (cursor, op) {
     return cursor;
 };
 
-var create = function(config) {
+var create = TextPatcher.create = function(config) {
     var ctx = config.realtime;
     var logging = config.logging;
 
@@ -140,16 +142,13 @@ var create = function(config) {
     };
 };
 
-var mod = module.exports = {
-    create: create, // create a TextPatcher object
-    diff: diff, // diff two strings
-    patch: patch, // apply an operation to a chainpad's realtime facade
-    format: format,
-    log: log, // print the components of an operation
-    transformCursor: transformCursor, // transform the position of a cursor
-    applyChange: applyChange, // a convenient wrapper around diff/log/patch
-};
-
-return mod;
-
+    if (typeof(module) !== 'undefined' && module.exports) {
+        module.exports = TextPatcher;
+    } else if ((typeof(define) !== 'undefined' && define !== null) && (define.amd !== null)) {
+        define(function () {
+            return TextPatcher;
+        });
+    } else {
+        window.TextPatcher = TextPather;
+    }
 }());
