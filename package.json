@@ -1,6 +1,6 @@
 {
   "name": "textpatcher",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "description": "text patching, compatible with the chainpad api",
   "main": "TextPatcher.js",
   "scripts": {
