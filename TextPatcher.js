@@ -149,6 +149,6 @@ var create = TextPatcher.create = function(config) {
             return TextPatcher;
         });
     } else {
-        window.TextPatcher = TextPather;
+        window.TextPatcher = TextPatcher;
     }
 }());
