@@ -2,6 +2,11 @@
 
     var TextPatcher = {};
 
+var fragmentPattern = /([^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/;
+var containsEmojiSegment = function (str) {
+    return fragmentPattern.test(str);
+};
+
 /*  diff takes two strings, the old content, and the desired content
     it returns the difference between these two strings in the form
     of an 'Operation' (as defined in chainpad.js).
@@ -34,6 +39,13 @@ var diff = TextPatcher.diff = function (oldval, newval) {
     }
     if (newval.length !== commonStart + commonEnd) {
         toInsert = newval.slice(commonStart, newval.length - commonEnd);
+    }
+
+    if (containsEmojiSegment(toInsert)) {
+        console.error("This would have blown up chainpad: [%s]", toInsert);
+        window.alert("TextPatcher does not correctly support Emojis. Coming Soon.");
+        window.location.reload();
+        return null;
     }
 
     return {
