@@ -7,7 +7,7 @@ var containsEmojiSegment = function (str) {
     return fragmentPattern.test(str);
 };
 
-var surrogatePatern = /[\uD800-\uDBFF]|[\uDC00-\uDFFF]/;
+var surrogatePattern = /[\uD800-\uDBFF]|[\uDC00-\uDFFF]/;
 var hasSurrogate = function (str) {
     return surrogatePattern.test(str);
 }
