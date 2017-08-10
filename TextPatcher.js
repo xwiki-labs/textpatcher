@@ -7,6 +7,11 @@ var containsEmojiSegment = function (str) {
     return fragmentPattern.test(str);
 };
 
+var surrogatePatern = /[\uD800-\uDBFF]|[\uDC00-\uDFFF]/;
+var hasSurrogate = function (str) {
+    return surrogatePattern.test(str);
+}
+
 /*  diff takes two strings, the old content, and the desired content
     it returns the difference between these two strings in the form
     of an 'Operation' (as defined in chainpad.js).
@@ -21,6 +26,13 @@ var diff = TextPatcher.diff = function (oldval, newval) {
 
     var commonStart = 0;
     while (oldval.charAt(commonStart) === newval.charAt(commonStart)) {
+        if (hasSurrogate(oldval.charAt(commonStart)) || hasSurrogate(newval.charAt(commonStart))) {
+            if (oldval.charAt(commonStart + 1) === newval.charAt(commonStart + 1)) {
+                commonStart++;
+            } else {
+                break;
+            }
+        }
         commonStart++;
     }
 
